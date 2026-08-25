@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Digital Menu Template</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+
+  /* ============================================================
+     HOW TO REUSE THIS FOR A NEW CLIENT
+     1. Scroll down to the <script> block near the bottom.
+     2. Edit the CONFIG object: business name, phone number,
+        tagline, colors, and the menu/service items.
+     3. Save the file, that's it — nothing else needs to change.
+     4. Host it (e.g. free on GitHub Pages, Netlify, or Google
+        Sites) and point the client's QR code at that URL.
+     ============================================================ */
+
+  :root{
+    --navy:#0B2540;
+    --teal:#1E8A82;
+    --paper:#FBF7EF;
+    --ink:#1C1C1C;
+    --amber:#E8873A;
+    --line:#CBBFA3;
+    --line-soft:#E4DCC8;
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--navy);
+    background-image:
+      radial-gradient(circle at 20% 20%, rgba(30,138,130,0.18), transparent 45%),
+      radial-gradient(circle at 80% 85%, rgba(232,135,58,0.10), transparent 40%);
+    min-height:100vh;
+    font-family:'Inter',sans-serif;
+    color:var(--ink);
+    display:flex;
+    justify-content:center;
+    padding:48px 16px;
+  }
+
+  .ticket{
+    position:relative;
+    width:100%;
+    max-width:420px;
+    background:var(--paper);
+    padding:38px 30px 34px;
+    box-shadow:0 30px 60px -20px rgba(0,0,0,0.5);
+  }
+
+  /* scalloped / perforated edges, top and bottom */
+  .ticket::before,
+  .ticket::after{
+    content:"";
+    position:absolute;
+    left:0; right:0;
+    height:14px;
+    background:
+      radial-gradient(circle at 10px 10px, var(--navy) 9px, transparent 10px) repeat-x;
+    background-size:20px 20px;
+  }
+  .ticket::before{ top:-7px; }
+  .ticket::after{ bottom:-7px; transform:rotate(180deg); }
+
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:var(--teal);
+    text-align:center;
+    margin-bottom:10px;
+  }
+
+  h1{
+    font-family:'Fraunces',serif;
+    font-weight:700;
+    font-size:clamp(28px,7vw,36px);
+    line-height:1.05;
+    text-align:center;
+    color:var(--navy);
+    margin:0 0 6px;
+  }
+
+  .tagline{
+    text-align:center;
+    font-size:14px;
+    color:#5b5647;
+    margin:0 0 22px;
+    font-style:italic;
+    font-family:'Fraunces',serif;
+  }
+
+  .dashed{
+    border:none;
+    border-top:2px dashed var(--line);
+    margin:22px 0;
+  }
+
+  .cta-wrap{ text-align:center; margin-bottom:6px; }
+
+  .stamp{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:var(--amber);
+    color:#fff;
+    font-family:'IBM Plex Mono',monospace;
+    font-weight:500;
+    font-size:13px;
+    letter-spacing:0.04em;
+    text-decoration:none;
+    padding:12px 22px;
+    border-radius:999px;
+    border:2px solid var(--navy);
+    box-shadow:3px 3px 0 var(--navy);
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .stamp:hover{ transform:translate(-2px,-2px); box-shadow:5px 5px 0 var(--navy); }
+  .stamp:active{ transform:translate(0,0); box-shadow:1px 1px 0 var(--navy); }
+
+  .category{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    letter-spacing:0.16em;
+    text-transform:uppercase;
+    color:var(--navy);
+    margin:26px 0 12px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .category::after{
+    content:"";
+    flex:1;
+    border-top:1px solid var(--line-soft);
+  }
+
+  .item{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    gap:12px;
+    padding:10px 0;
+    border-bottom:1px dotted var(--line-soft);
+  }
+  .item:last-child{ border-bottom:none; }
+
+  .item-info{ flex:1; }
+  .item-name{
+    font-weight:600;
+    font-size:15px;
+    color:var(--ink);
+  }
+  .item-desc{
+    font-size:12.5px;
+    color:#807a68;
+    margin-top:2px;
+  }
+  .item-price{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:14px;
+    font-weight:500;
+    color:var(--teal);
+    white-space:nowrap;
+  }
+  .item-order{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:10.5px;
+    color:var(--navy);
+    text-decoration:none;
+    border:1px solid var(--navy);
+    border-radius:5px;
+    padding:3px 7px;
+    margin-left:10px;
+    white-space:nowrap;
+  }
+  .item-order:hover{ background:var(--navy); color:var(--paper); }
+  .item-row{ display:flex; align-items:center; }
+
+  footer{
+    margin-top:28px;
+    text-align:center;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:10.5px;
+    color:#9b957f;
+    letter-spacing:0.05em;
+  }
+  footer .barcode{
+    height:26px;
+    margin:14px auto 8px;
+    width:70%;
+    background:repeating-linear-gradient(90deg,var(--navy) 0 2px,transparent 2px 5px, var(--navy) 5px 6px, transparent 6px 11px);
+    opacity:0.55;
+  }
+
+  @media (max-width:420px){
+    .ticket{ padding:32px 20px 28px; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="ticket" id="ticket">
+    <div class="eyebrow" id="eyebrow">Order on WhatsApp</div>
+    <h1 id="bizName">Business Name</h1>
+    <p class="tagline" id="tagline">a short tagline goes here</p>
+
+    <div class="cta-wrap">
+      <a class="stamp" id="mainCta" href="#" target="_blank" rel="noopener">
+        💬 &nbsp;Message us to order
+      </a>
+    </div>
+
+    <hr class="dashed">
+
+    <div id="menuBody"></div>
+
+    <footer>
+      <div class="barcode"></div>
+      <div id="footerNote">powered by Digitex</div>
+    </footer>
+  </div>
+
+<script>
+/* ============================================================
+   EDIT EVERYTHING BELOW THIS LINE FOR A NEW CLIENT
+   ============================================================ */
+const CONFIG = {
+  businessName: "Business Name",
+  tagline: "your short one-line tagline here",
+  whatsappNumber: "2348000000000",   // country code + number, no + or leading 0
+  defaultMessage: "Hi! I'd like to place an order.",
+  footerNote: "powered by Digitex",
+
+  categories: [
+    {
+      name: "Starters",
+      items: [
+        { name: "Item name",      price: "₦2,500", desc: "short description" },
+        { name: "Another item",   price: "₦3,000", desc: "" }
+      ]
+    },
+    {
+      name: "Mains",
+      items: [
+        { name: "Signature dish", price: "₦6,500", desc: "what makes it good" },
+        { name: "Second dish",    price: "₦5,000", desc: "" }
+      ]
+    }
+  ]
+};
+/* ============================================================
+   NOTHING BELOW THIS LINE NEEDS TO CHANGE
+   ============================================================ */
+
+function waLink(message){
+  return `https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent(message)}`;
+}
+
+document.getElementById('bizName').textContent = CONFIG.businessName;
+document.getElementById('tagline').textContent = CONFIG.tagline;
+document.getElementById('footerNote').textContent = CONFIG.footerNote;
+document.getElementById('mainCta').href = waLink(CONFIG.defaultMessage);
+
+const body = document.getElementById('menuBody');
+CONFIG.categories.forEach(cat=>{
+  const catEl = document.createElement('div');
+  catEl.className = 'category';
+  catEl.textContent = cat.name;
+  body.appendChild(catEl);
+
+  cat.items.forEach(item=>{
+    const row = document.createElement('div');
+    row.className = 'item';
+
+    const info = document.createElement('div');
+    info.className = 'item-info';
+    info.innerHTML = `<div class="item-name">${item.name}</div>` +
+                      (item.desc ? `<div class="item-desc">${item.desc}</div>` : '');
+
+    const right = document.createElement('div');
+    right.className = 'item-row';
+    right.innerHTML = `<span class="item-price">${item.price}</span>`;
+
+    const orderLink = document.createElement('a');
+    orderLink.className = 'item-order';
+    orderLink.textContent = 'Order';
+    orderLink.target = '_blank';
+    orderLink.rel = 'noopener';
+    orderLink.href = waLink(`Hi! I'd like to order: ${item.name}`);
+    right.appendChild(orderLink);
+
+    row.appendChild(info);
+    row.appendChild(right);
+    body.appendChild(row);
+  });
+});
+</script>
+
+</body>
+</html>
