@@ -21,6 +21,8 @@
   :root{
     --purple:#2E0B45;
     --amber:#E8873A;
+    --navy:var(--purple);
+    --teal:var(--amber);
     --paper:#FBF7EF;
     --ink:#1C1C1C;
     --line:#CBBFA3;
@@ -51,7 +53,6 @@
     box-shadow:0 30px 60px -20px rgba(0,0,0,0.5);
   }
 
-  /* scalloped / perforated edges, top and bottom */
   .ticket::before,
   .ticket::after{
     content:"";
@@ -177,8 +178,19 @@
     padding:3px 7px;
     margin-left:10px;
     white-space:nowrap;
+    transition: background .25s ease, color .25s ease, border-color .25s ease;
   }
   .item-order:hover{ background:var(--navy); color:var(--paper); }
+  .item-order.selected{
+    background:#1f9254;
+    color:#fff;
+    border-color:#1f9254;
+  }
+  .item-order.removing{
+    background:#c0392b;
+    color:#fff;
+    border-color:#c0392b;
+  }
   .item-row{ display:flex; align-items:center; }
 
   footer{
@@ -234,7 +246,7 @@ const CONFIG = {
   tagline: "Fresh suya, grilled to order, every evening",
   whatsappNumber: "2348123456789",   // country code + number, no + or leading 0
   defaultMessage: "Hi! I'd like to place a suya order.",
-  footerNote: "powered by Digitex",
+  footerNote: "powered by Vercor Digital",
 
   categories: [
     {
@@ -294,6 +306,18 @@ CONFIG.categories.forEach(cat=>{
     orderLink.target = '_blank';
     orderLink.rel = 'noopener';
     orderLink.href = waLink(`Hi! I'd like to order: ${item.name}`);
+
+    orderLink.addEventListener('click', function(e){
+      if(orderLink.classList.contains('selected')){
+        e.preventDefault();
+        orderLink.classList.remove('selected');
+        orderLink.classList.add('removing');
+        setTimeout(()=> orderLink.classList.remove('removing'), 500);
+      } else {
+        orderLink.classList.add('selected');
+      }
+    });
+
     right.appendChild(orderLink);
 
     row.appendChild(info);
